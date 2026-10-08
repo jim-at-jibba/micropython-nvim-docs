@@ -1,0 +1,52 @@
+---
+title: micropython.nvim
+description: Write, run and upload MicroPython code on a device without leaving Neovim.
+template: splash
+hero:
+  tagline: Write MicroPython in Neovim, then run it, upload it and talk to your device without leaving the editor.
+  actions:
+    - text: Get started
+      link: /micropython-nvim-docs/getting-started/
+      icon: right-arrow
+    - text: Browse the Playbook
+      link: /micropython-nvim-docs/playbook/
+      variant: minimal
+    - text: View on GitHub
+      link: https://github.com/jim-at-jibba/micropython.nvim
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+micropython.nvim is a Neovim plugin for working on MicroPython boards such as the Raspberry Pi
+Pico. It's for anyone who writes code for a microcontroller and would rather do it from Neovim. Under the hood it uses
+[mpremote](https://docs.micropython.org/en/latest/reference/mpremote.html), MicroPython's
+official tool.
+
+Everything is one command, `:MP`, with tab completion.
+
+<CardGrid>
+	<Card title="Run and upload" icon="rocket">
+		Run the current file on the device without copying it, or upload the project and keep its
+		folders. Turn on upload on save and each file you save is uploaded to the device.
+	</Card>
+	<Card title="REPL in a split" icon="seti:python">
+		Keep the MicroPython prompt open next to your code and send it a line, a selection or the
+		whole buffer.
+	</Card>
+	<Card title="Files on the device" icon="document">
+		Browse, edit, download and delete the files stored on the device as if they were local.
+	</Card>
+	<Card title="Editor support" icon="setting">
+		Start a project with type stubs matched to the connected device, so the language server knows
+		`machine`, `rp2` and the rest.
+	</Card>
+</CardGrid>
+
+## Where next
+
+- New here? [Getting started](/micropython-nvim-docs/getting-started/) installs the plugin and runs your first code on a
+  device.
+- Know what you want to do? The [Playbook](/micropython-nvim-docs/playbook/) walks through everyday situations, from
+  starting a project to recovering a device.
