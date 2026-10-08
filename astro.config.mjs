@@ -5,8 +5,7 @@ import starlightLinksValidator from 'starlight-links-validator';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://jim-at-jibba.github.io',
-	base: '/micropython-nvim-docs',
+	site: 'https://micropython-nvim.jamesbest.uk',
 	integrations: [
 		starlight({
 			title: 'micropython.nvim',

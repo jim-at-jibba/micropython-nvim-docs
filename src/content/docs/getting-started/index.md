@@ -118,4 +118,4 @@ boards, change it to your LED's pin number.
   vim.keymap.set("n", "<leader>mr", require("micropython_nvim").run)
   ```
 
-- Browse the [Playbook](/micropython-nvim-docs/playbook/) for walkthroughs of everyday situations.
+- Browse the [Playbook](/playbook/) for walkthroughs of everyday situations.
