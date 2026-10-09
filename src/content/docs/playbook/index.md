@@ -27,3 +27,6 @@ other boards; where one doesn't, the entry says so.
 | [A brand-new Pico](/playbook/brand-new-pico/) | A Pico straight out of the bag, to a blinking LED from your own project |
 | [The fast edit loop](/playbook/fast-edit-loop/) | Change code and see it on the device in seconds, with upload on save or a mount |
 | [Poking at hardware live](/playbook/hardware-live/) | Try out pins and sensors line by line from your buffer, in the REPL |
+| [Adding a library and getting completions](/playbook/library-and-completions/) | Install a driver onto the device with mip, and stubs into the project for your editor |
+| [Editing a file that only exists on the device](/playbook/device-only-files/) | Open a device file, change it and save it straight back |
+| [The device is stuck](/playbook/stuck-device/) | Get an unresponsive device back, from the gentlest fix to reflashing |
