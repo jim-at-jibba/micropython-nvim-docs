@@ -56,9 +56,13 @@ require("micropython_nvim").setup({
 })
 ```
 
+[Configuration](/configuration/) explains each option.
+
 Restart Neovim, then run `:checkhealth micropython_nvim` (or `:MP health`). It checks your Neovim
 version, whether mpremote, uv, mpflash and snacks.nvim were found, the project's settings and
 whether a device is connected, and tells you how to install anything required that's missing.
+[Troubleshooting](/troubleshooting/#start-with-the-health-check) says what to do about each
+warning.
 
 ## Create a project
 

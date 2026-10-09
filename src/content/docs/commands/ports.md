@@ -20,7 +20,7 @@ PORT=auto
 
 `auto` is fine with one device plugged in. With several, pick one: a fixed path, or `id:` if
 the path changes between plug-ins. You can also set a default
-in [`setup()`](/getting-started/#install-the-plugin) with the `port` option; a project's
+in [`setup()`](/configuration/#setup-options) with the `port` option; a project's
 `.micropython` file overrides it.
 
 ## `:MP set_port`

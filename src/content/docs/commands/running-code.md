@@ -77,7 +77,7 @@ Add names or project paths to skip for one upload as arguments:
 
 ### Upload on save
 
-Set `upload_on_save = true` in [`setup()`](/getting-started/#install-the-plugin) and each file
+Set `upload_on_save = true` in [`setup()`](/configuration/#setup-options) and each file
 you save is uploaded to the same path on the device. This only happens inside a project (a
 folder with a `.micropython` file), and only the default ignore list applies. Files saved while
 an upload is running are queued and sent together when it finishes. While the REPL is open,
