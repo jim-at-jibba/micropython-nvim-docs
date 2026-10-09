@@ -18,7 +18,7 @@ what works.
 - [`:MP repl`](/commands/repl/#mp-repl) to open the REPL in a split
 - [`:MP send`](/commands/repl/#mp-send) to send the current line, or a selection
 - [`:MP send_buffer`](/commands/repl/#mp-send_buffer) to send the whole file
-- [`:MP interrupt`](/commands/repl/#mp-interrupt) to stop a loop without losing your variables
+- [`:MP interrupt`](/commands/repl/#mp-interrupt) to **interrupt** a loop without losing your variables
 
 The [suggested keymaps](/commands/repl/) make each of these one keystroke.
 
@@ -95,9 +95,8 @@ no output. Send `print(temperature())`.
 
 **You should see** the temperature in °C, something like `22.4`.
 
-Several lines are sent in paste mode, so the REPL doesn't add its own indentation, and blank
-lines inside a function don't end it early. Indentation the lines all share is removed, so you
-can also select just the lines inside a loop or an `if` and send them on their own.
+Several lines are sent in paste mode, which keeps their indentation as it is. See
+[`:MP send`](/commands/repl/#mp-send) for the details.
 
 ### 5. Start a loop, then stop it
 
@@ -111,7 +110,7 @@ The loop never ends, so stop it from your buffer:
 :MP interrupt
 ```
 
-**You should see** a `KeyboardInterrupt` traceback, then the `>>>` prompt again. **Interrupting**
+**You should see** a `KeyboardInterrupt` traceback, then the `>>>` prompt again. Interrupting
 stops the code but keeps everything you defined: send `led.off()` or `print(temperature())`
 and they still work.
 
@@ -138,6 +137,7 @@ buffer, ready to move into `main.py`.
 port. [`:MP run`](/commands/running-code/#mp-run) and
 [`:MP run_main`](/commands/running-code/#mp-run_main) run through the REPL instead, but other
 commands, such as uploads and [`:MP files`](/commands/files/#mp-files), need it for themselves.
+(`:MP flash` is the exception: it closes the REPL itself.)
 Quit the REPL with `Ctrl-]` first. Closing the split's window isn't enough: the REPL keeps running
 in the background.
 

@@ -26,7 +26,7 @@ first from the editor and then on its own at power-on.
 
 ### 1. Install MicroPython
 
-A new Pico has no **firmware** yet, so it has no serial **port** and
+A new Pico has no firmware yet, so it has no serial **port** and
 [`:MP flash`](/commands/device-and-firmware/#mp-flash) can't find it. Install MicroPython the
 first time without the plugin:
 
@@ -124,11 +124,11 @@ yours there, then restart the device:
 the **hard reset** the LED blinks again, this time without any terminal. Unplug the Pico and plug
 it into any USB power supply, and it keeps blinking.
 
-### Later: updating MicroPython
-
+:::tip[Updating MicroPython later]
 Now that the Pico runs MicroPython, the plugin can update it for you. With mpflash installed,
 run [`:MP flash`](/commands/device-and-firmware/#mp-flash) and pick `stable`. Afterwards, run
 [`:MP set_stubs`](/commands/project-and-stubs/#mp-set_stubs) so the stubs match the new version.
+:::
 
 ## What can go wrong
 
@@ -144,7 +144,8 @@ device, so it can't suggest stubs for it. Check `:MP list_devices`, and close an
 using the port, such as the [REPL](/commands/repl/), Thonny or another mpremote. Then cancel and
 run `:MP init` again, or pick `micropython-rp2-stubs` from the list.
 
-**You ran `:MP set_port` before `:MP init`.** With no `.micropython` yet, the port is only kept
+**`No config file found. Run :MP init first.`** You ran `:MP set_port` before `:MP init`. With
+no `.micropython` yet, the port is only kept
 until you quit Neovim, and `:MP init` writes `PORT=auto`. Run `:MP set_port` again after
 `:MP init` to save it.
 

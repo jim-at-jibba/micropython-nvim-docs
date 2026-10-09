@@ -19,8 +19,8 @@ There are two ways to set this up:
 - **Mount**: the device reads the project straight from your computer, so there's nothing to
   upload. Nothing is left on the device afterwards.
 
-Pick upload on save when the device should end up running this code on its own. Pick a mount
-when you're experimenting and don't want to change what's stored on the device.
+For which to pick when, see [Upload or Mount?](/commands/running-code/). The steps below walk
+through both.
 
 ## What you'll use
 
@@ -37,9 +37,11 @@ lib/__init__.py
 lib/greeting.py   # MESSAGE = "Hello"
 ```
 
-## Steps: upload on save
+## Steps
 
-### 1. Turn on upload on save
+### Upload on save
+
+#### 1. Turn on upload on save
 
 In your plugin config:
 
@@ -52,7 +54,7 @@ require("micropython_nvim").setup({
 Restart Neovim in the project folder. To try it for one session without editing your config,
 run `:lua require("micropython_nvim").setup({ upload_on_save = true })` instead.
 
-### 2. Bring the device up to date
+#### 2. Bring the device up to date
 
 Upload on save only sends the files you save from now on. Upload the rest once:
 
@@ -64,7 +66,7 @@ Upload on save only sends the files you save from now on. Upload the rest once:
 successfully`. Files already on the device with the same content are skipped, so this is quick
 to run again.
 
-### 3. Change a file and save it
+#### 3. Change a file and save it
 
 Edit `lib/greeting.py`, for example `MESSAGE = "Hi"`, and `:w`.
 
@@ -72,7 +74,7 @@ Edit `lib/greeting.py`, for example `MESSAGE = "Hi"`, and `:w`.
 successfully`. The file goes to `lib/greeting.py` on the device, the same path as in your
 project.
 
-### 4. Run it
+#### 4. Run it
 
 From any buffer:
 
@@ -83,7 +85,7 @@ From any buffer:
 **You should see** a terminal with your program's output, including the change: `Hi, world!`.
 Press `Ctrl-C` to stop the program, then Enter to close the terminal.
 
-### 5. Repeat
+#### 5. Repeat
 
 From now on, the loop is: edit, `:w`, `:MP run_main`. A key for `run_main` makes it two
 keystrokes:
@@ -95,9 +97,9 @@ vim.keymap.set("n", "<leader>mm", require("micropython_nvim").run_main, { desc =
 Because each file was uploaded as you saved it, the device is already running your latest code
 the next time it powers up.
 
-## Steps: mount
+### Mount
 
-### 1. Mount the project
+#### 1. Mount the project
 
 ```vim
 :MP mount
@@ -109,7 +111,7 @@ MicroPython `>>>` prompt.
 Leave upload on save off for this loop. The mount holds the device's **port**, so every upload
 on save would fail while it's running.
 
-### 2. Run your code
+#### 2. Run your code
 
 At the prompt:
 
@@ -120,7 +122,7 @@ At the prompt:
 **You should see** your program's output. It ran from the files in your project, not from
 anything stored on the device. Press `Ctrl-C` to stop it.
 
-### 3. Change a file and run it again
+#### 3. Change a file and run it again
 
 Edit and save a file. Then, in the mount terminal, press `Ctrl-D` to **soft reset** the device
 and `import main` again. The soft reset keeps the mount, and clears the modules that were
@@ -128,7 +130,7 @@ already imported, so your change is picked up.
 
 **You should see** the new output, without having uploaded anything.
 
-### 4. Finish
+#### 4. Finish
 
 Press `Ctrl-]` to end the mount. The device is left exactly as it was before you started: none
 of your project's files are on it.
@@ -137,10 +139,10 @@ of your project's files are on it.
 
 **Saves don't upload.** Upload on save only works in a project, a folder with a `.micropython`
 file, opened as Neovim's working directory. Files on the
-[ignore list](/commands/running-code/#mp-upload_all), such as `README.md` and `pyproject.toml`,
+**[ignore list](/commands/running-code/#mp-upload_all)**, such as `README.md` and `pyproject.toml`,
 and files outside the project, are never uploaded on save.
 
-**`Upload … failed` while a program is running.** The device's **port** can only be used by one
+**`Upload … failed` while a program is running.** The device's port can only be used by one
 program at a time. A `:MP run_main` terminal that's still running holds it, and so do the
 [REPL](/commands/repl/) and a mount. Stop the program with `Ctrl-C`, or quit the REPL or mount
 with `Ctrl-]`, then save again.
