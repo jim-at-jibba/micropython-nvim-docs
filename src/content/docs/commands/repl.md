@@ -17,7 +17,7 @@ Suggested keymaps:
 
 ```lua
 local mp = require("micropython_nvim")
-vim.keymap.set("n", "<leader>mr", mp.repl, { desc = "MicroPython: REPL" })
+vim.keymap.set("n", "<leader>mp", mp.repl, { desc = "MicroPython: REPL" })
 vim.keymap.set("n", "<leader>ml", mp.repl_send_line, { desc = "MicroPython: send line" })
 vim.keymap.set("x", "<leader>ms", mp.repl_send_selection, { desc = "MicroPython: send selection" })
 vim.keymap.set("n", "<leader>mb", mp.repl_send_buffer, { desc = "MicroPython: send buffer" })

@@ -183,7 +183,7 @@ the keys you like:
 
 ```lua
 local mp = require("micropython_nvim")
-vim.keymap.set("n", "<leader>mx", mp.run, { desc = "MicroPython: run file" })
+vim.keymap.set("n", "<leader>mr", mp.run, { desc = "MicroPython: run file" })
 vim.keymap.set("n", "<leader>mu", mp.upload_current, { desc = "MicroPython: upload file" })
 vim.keymap.set("n", "<leader>mf", mp.files, { desc = "MicroPython: device files" })
 ```

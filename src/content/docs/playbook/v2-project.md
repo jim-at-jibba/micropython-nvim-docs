@@ -7,8 +7,8 @@ sidebar:
 
 ## Situation
 
-You have a project you made with v2 of the plugin, and you've just updated to v3. It looks like
-this:
+You have a **project** you made with v2 of the plugin, and you've just updated to v3. It looks
+like this:
 
 ```
 weather/
@@ -22,9 +22,10 @@ weather/
 └── pyrightconfig.json
 ```
 
-`main.py` does `import sensor` and `import led`. Under v2 that worked, because every upload
-went to the top of the **device**. You want the project working under v3, with nothing old
-left behind on the device.
+`main.py` does `import sensor` and `import led`. Under v2 you **uploaded** `sensor.py` and
+`led.py` one at a time with `:MPUpload`, which put each file at the top of the **device**, so
+both imports worked. You want the project working under v3, with nothing old left behind on the
+device.
 
 This entry goes through it in order. [Migrating from v2](/migrating-from-v2/) has the full
 reference, including every old command and its new name.
@@ -60,25 +61,15 @@ section says `No project config in …`: the next step fixes that.
 
 ### 2. Move the port into `.micropython`
 
-v3 doesn't read `.ampy`. If you have one, look at its `AMPY_PORT` line:
+v3 doesn't read `.ampy`. Create a `.micropython` file next to it, with the **port** from its
+`AMPY_PORT` line, such as `PORT=/dev/ttyACM0`, as in
+[`.ampy` files](/migrating-from-v2/#ampy-files). If you already have a `.micropython`, delete its
+`BAUD=` line instead.
 
-```
-AMPY_PORT=/dev/ttyACM0
-AMPY_BAUD=115200
-```
-
-Create `.micropython` next to it, with the same port:
-
-```
-PORT=/dev/ttyACM0
-```
-
-If you already have a `.micropython`, delete its `BAUD=` line instead.
+Create the file by hand: [`:MP init`](/commands/project-and-stubs/#mp-init) would also replace
+your `main.py`, `pyproject.toml` and `pyrightconfig.json`.
 
 Restart Neovim. **You should see** `Config loaded from <folder>/.micropython`. Delete `.ampy`.
-
-Don't run `:MP init` to make the file: it also replaces your `main.py`, `pyproject.toml` and
-`pyrightconfig.json`.
 
 ### 3. Set up the stubs
 
@@ -99,23 +90,22 @@ Add `typings/` to your `.gitignore`: v2's didn't have it.
 ### 4. Fix imports that relied on the top folder
 
 v3 uploads keep the project's folders: `drivers/sensor.py` goes to `drivers/sensor.py` on the
-device. Go through `main.py`'s imports:
+device ([more on that](/migrating-from-v2/#uploads-keep-project-paths)). `import led` still
+works, because MicroPython also looks in `lib/`. `import sensor` doesn't: change it to
+`from drivers import sensor`, or move `sensor.py` into `lib/`.
 
-- `import led` still works. Official MicroPython looks for modules in `lib/` as well as the top
-  folder.
-- `import sensor` doesn't: `drivers/` isn't searched. Change it to `from drivers import sensor`,
-  or move `sensor.py` into `lib/`.
+**You should see** no new warnings from your language server on the changed import.
 
 ### 5. Clear the old copies off the device
 
-v2 left `led.py` and `sensor.py` at the top of the device. MicroPython looks there first, so
-those old copies would be imported instead of the new ones. Run:
+`:MPUpload` left `led.py` and `sensor.py` at the top of the device. MicroPython looks there
+first, so those old copies would be imported instead of the new ones. Run:
 
 ```vim
 :MP files
 ```
 
-**You should see** your v2 uploads at the top level: `main.py`, `led.py`, `sensor.py`. Move to
+**You should see** your old uploads at the top level: `main.py`, `led.py`, `sensor.py`. Move to
 each old copy of a file that now lives in a folder, here `led.py` and `sensor.py`, and press `d`
 to delete it.
 
@@ -136,8 +126,8 @@ Try the project without restarting the device:
 :MP run_main
 ```
 
-In v3, `:MP run_main` runs the `main.py` in your project, not the one on the device. Its imports
-come from the device, which is why you uploaded first.
+This runs the `main.py` in your project, with its imports from the device: see
+[`:MP run_main`](/migrating-from-v2/#mp-run_main-runs-your-local-mainpy) for how that changed.
 
 **You should see** your program running in a terminal. Press `Ctrl-C` to stop it.
 
@@ -147,8 +137,8 @@ come from the device, which is why you uploaded first.
 :MP hard_reset
 ```
 
-**You should see** `Hard reset completed successfully`, and the device running `main.py` from
-power-on, as it did under v2.
+**You should see** `Hard reset completed successfully`. After the **hard reset**, the device runs
+`main.py` from power-on, as it did under v2.
 
 ## What can go wrong
 

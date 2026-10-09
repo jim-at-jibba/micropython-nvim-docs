@@ -55,7 +55,7 @@ straight away while the device is plugged in.
 
 A device's **port** can only be used by one program at a time. Look for:
 
-- the [REPL](/commands/repl/): go to its split and press `Ctrl-]`. Closing the window only hides
+- the **[REPL](/commands/repl/)**: go to its split and press `Ctrl-]`. Closing the window only hides
   it, and it keeps the port.
 - a [`:MP run`](/commands/running-code/#mp-run) terminal that's still running: press `Ctrl-C`
 - a [mount](/commands/running-code/#mp-mount): press `Ctrl-]` in its terminal
@@ -112,8 +112,10 @@ If it gets stuck again after every restart, the device's own `main.py` is the pr
 
 ## A file didn't upload, or the old version still runs
 
+You **uploaded** a file, but the device doesn't have it, or still runs the old version.
+
 **It's on the ignore list.** [`:MP upload_all`](/commands/running-code/#mp-upload_all) and
-upload on save skip anything on the [ignore list](/configuration/#the-ignore-list), by name at
+upload on save skip anything on the **[ignore list](/configuration/#the-ignore-list)**, by name at
 any depth. A folder called `env`, or a `README.md` inside `lib/`, is skipped too. Upload it
 with [`:MP upload`](/commands/running-code/#mp-upload), which ignores the list, or rename it.
 Turn on `debug` in [`setup()`](/configuration/#setup-options) to see what an upload skipped in
@@ -154,7 +156,7 @@ The completions come from **stubs** in your project's `typings/` folder.
   setup.
 - **They're for the wrong board.** Completions offer pins or functions your board doesn't have.
   Run `:MP set_stubs` with the device connected and pick the first suggestion.
-- **The module comes from a package you installed with mip.** Stubs don't cover those. See
+- **The module is a package you installed with [mip](/commands/device-and-firmware/#mp-mip).** Stubs don't cover those. See
   [Adding a library and getting completions](/playbook/library-and-completions/#what-can-go-wrong).
 
 After changing stubs, restart your language server, or Neovim, if it doesn't pick them up.

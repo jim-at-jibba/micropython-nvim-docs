@@ -7,13 +7,14 @@ sidebar:
 
 ## Situation
 
-You have a Pimoroni Badger 2350. It doesn't run official MicroPython: it runs Badgeware,
-Pimoroni's **custom firmware**, which is MicroPython with a launcher and apps built in. You want
+You have a Pimoroni Badger 2350, a **device** whose **firmware** isn't official MicroPython:
+it runs Badgeware, Pimoroni's **custom firmware**, which is MicroPython with a launcher and apps
+built in. You want
 to write your own code for it from Neovim.
 
-Most of the plugin works as it does on a Pico: running code, the **REPL**, uploads, the file
-browser, mip and `:MP info`. A few things work differently, because of how the firmware is
-built:
+Most of the plugin works as it does on a Pico: running code, the **REPL**, **uploads**, the file
+browser, **mip** and [`:MP info`](/commands/device-and-firmware/#mp-info). A few things work
+differently, because of how the firmware is built:
 
 | What's different | Why | What to do instead |
 |------------------|-----|--------------------|
@@ -91,6 +92,9 @@ badge: Any
 Add the other Badgeware names you use, such as `color`, the same way. You don't get
 completions for them, but they're no longer flagged.
 
+**You should see** pyright stop flagging `screen` and `badge`. Restart your language server if
+it doesn't.
+
 ### 4. Run code
 
 Put this in `scratch/hello.py`:
@@ -123,7 +127,7 @@ The argument keeps `__builtins__.pyi`, which is only for your editor, off the de
 **You should see** your `main.py` running in a terminal. Stop it with `Ctrl-C`, then press RESET
 to get the launcher back.
 
-Your `main.py` is now on the device, but pressing RESET or running
+Your `main.py` is now on the device, but pressing RESET or doing a **hard reset** with
 [`:MP hard_reset`](/commands/device-and-firmware/#mp-hard_reset) starts the launcher, not your
 code. The launcher's frozen `main.py` runs before one on the device's files. To start your code
 without Neovim, make it a launcher app instead: Badgeware's documentation shows how. Apps are
@@ -141,7 +145,7 @@ copied over USB disk mode (see the next step), not uploaded.
 You can open anything in `system/` to read it, but not save it: writes fail, because MicroPython
 mounts that partition read-only. To change or add apps, double-tap RESET. The Badger switches
 to USB disk mode and shows up as a `Badger2350` drive on your computer, where the apps can be
-edited. Press RESET once to leave disk mode. While it's in disk mode it has no serial port, so
+edited. Press RESET once to leave disk mode. While it's in disk mode it has no serial **port**, so
 no `:MP` command can reach it.
 
 ### 7. Update the firmware by hand
@@ -162,11 +166,13 @@ Hold BOOT, on the back at the far left, tap RESET, then let go of BOOT. A drive 
 appears. Drag the `.uf2` onto it.
 
 **You should see** the drive disappear and the Badger restart into the launcher. Run
-`:MP set_stubs` afterwards if the MicroPython version changed.
+[`:MP set_stubs`](/commands/project-and-stubs/#mp-set_stubs) afterwards if the MicroPython
+version changed.
 
 ## What can go wrong
 
-**The port disappears.** The Badger may be asleep: press a front button or RESET. If a
+**The serial port disappears.** The Badger's port goes away when it's asleep: press a front
+button or RESET. If a
 `Badger2350` drive is showing, it's in disk mode: press RESET once. Then try again; with port
 `auto`, nothing else needs changing.
 

@@ -6,7 +6,7 @@ description: Every breaking change in v3, and what to do about each one.
 v3 puts every command under one `:MP` command and removes the old settings. Most configs need a
 few small changes. This page lists every breaking change from the
 [v3.0.0 release](https://github.com/jim-at-jibba/micropython.nvim/releases/tag/v3.0.0), with
-what to do about it. For a walkthrough of upgrading a real project, see
+what to do about it. For a walkthrough of upgrading a real **project**, see
 [Moving a v2 project to v3](/playbook/v2-project/).
 
 ## Checklist
@@ -114,7 +114,7 @@ The statusline component shows only the port now: ` P:/dev/ttyACM0` instead of
 
 ## `.ampy` files
 
-v3 no longer reads `.ampy` files. A folder with only `.ampy` isn't a **project** any more:
+v3 no longer reads `.ampy` files. A folder with only `.ampy` isn't a project any more:
 commands use port `auto`, upload on save is off, and `exists()`, the statusline condition, is
 false.
 
@@ -150,26 +150,27 @@ The modules it imports still come from the device. Upload them first, with
 
 To run the copy on the device instead, use
 [`:MP hard_reset`](/commands/device-and-firmware/#mp-hard_reset): the device restarts and runs
-its `main.py`. A soft reset with [`:MP reset`](/commands/device-and-firmware/#mp-reset) doesn't
+its `main.py`. A **soft reset** with [`:MP reset`](/commands/device-and-firmware/#mp-reset) doesn't
 run it.
 
 ## Uploads keep project paths
 
-In v2, every upload went to the device's top folder, by name: `lib/led.py` was uploaded as
-`led.py`. In v3, [`:MP upload`](/commands/running-code/#mp-upload) and
-[`:MP upload_all`](/commands/running-code/#mp-upload_all) keep the file's path: `lib/led.py`
-goes to `lib/led.py` on the device, and missing folders are created first.
+In v2, `:MPUpload` uploaded the current file to the device's top folder, by name:
+`lib/led.py` was uploaded as `led.py`. In v3, [`:MP upload`](/commands/running-code/#mp-upload)
+keeps the file's path, as `:MPUploadAll` already did: `lib/led.py` goes to `lib/led.py` on the
+device, and missing folders are created first.
 
-What that means for your imports:
+If you only ever uploaded with `:MPUploadAll`, nothing changes. If you used `:MPUpload` on files
+in folders, your code may have relied on finding them at the top of the device:
 
 - **Files in `lib/`** keep working. Official MicroPython looks for modules in `/lib` as well as
   the top folder, so `import led` still finds `lib/led.py`.
-- **Files in other folders** move. If your code does `import sensors` for `drivers/sensors.py`,
-  change it to `from drivers import sensors`, or move the file to `lib/` or the top of the
+- **Files in other folders** move. If your code does `import sensor` for `drivers/sensor.py`,
+  change it to `from drivers import sensor`, or move the file to `lib/` or the top of the
   project.
 - **Old copies at the top of the device win.** MicroPython looks in the top folder before
-  `/lib`, so a `led.py` uploaded there by v2 is imported instead of your new `lib/led.py`.
-  Delete the old copies with [`:MP files`](/commands/files/#mp-files) (`d`) or
+  `/lib`, so a `led.py` that `:MPUpload` put there is imported instead of your new
+  `lib/led.py`. Delete the old copies with [`:MP files`](/commands/files/#mp-files) (`d`) or
   [`:MP erase`](/commands/files/#mp-erase).
 
 A file from outside the project is still uploaded to the device's top folder.
