@@ -14,13 +14,13 @@ code.
 
 Two different things get installed here, in two different places:
 
-| | Installed with | Lives in | Used by |
-|---|---|---|---|
-| A package, such as `ssd1306` | [`:MP mip`](/commands/device-and-firmware/#mp-mip) | The device's `lib` folder | Your code, when it runs on the device |
-| **Stubs** | [`:MP install`](/commands/project-and-stubs/#mp-install) or [`:MP set_stubs`](/commands/project-and-stubs/#mp-set_stubs) | Your **project**'s `typings/` folder | Your language server, while you edit |
+| | Lives in | Used by |
+|---|---|---|
+| A package, such as `ssd1306`, installed with mip | The device's `lib` folder | Your code, when it runs on the device |
+| **Stubs** | Your **project**'s `typings/` folder | Your language server, while you edit |
 
-Stubs never go onto the device, and a package installed with mip never comes back to your
-project. Neither one does the other's job.
+Neither one does the other's job: stubs never go onto the device, and a package installed with
+mip never comes back to your project.
 
 ## What you'll use
 
@@ -60,7 +60,8 @@ again.
 
 ### 2. Install the driver onto the device
 
-Quit the [REPL](/commands/repl/) if it's open, then run:
+Quit the **[REPL](/commands/repl/)** if it's open, so the device's **port** is free
+([more on that](/playbook/stuck-device/#1-check-its-the-device-not-the-port)), then run:
 
 ```vim
 :MP mip ssd1306
@@ -109,7 +110,7 @@ the stubs. `ssd1306` doesn't: see "No completions for the package" below.
 
 ### 5. Note what the device needs
 
-mip packages aren't recorded anywhere in your project. A fresh device, or one you've erased,
+mip packages aren't recorded anywhere in your project. A fresh device, or one you've **erased**,
 won't have the driver until you run `:MP mip ssd1306` again. Note the packages your project
 needs, for example in a comment at the top of `main.py` or in your README.
 
@@ -120,7 +121,7 @@ the **firmware**'s modules, not packages you install with mip, and the `.mpy` on
 out of your editor's reach. The code still runs. If you want completions for the package too,
 use its source instead of mip: save
 [`ssd1306.py`](https://github.com/micropython/micropython-lib/blob/master/micropython/drivers/display/ssd1306/ssd1306.py)
-at the top of your project and [upload](/commands/running-code/#mp-upload) it with your other
+at the top of your project and **[upload](/commands/running-code/#mp-upload)** it with your other
 files. Your language server reads it from the project, and the device imports it from its top
 folder.
 
@@ -131,8 +132,7 @@ or erasing the `lib` folder, removes it.
 **`Install ssd1306 failed`.** Read the message under it:
 
 - `failed to access … (it may be in use by another program)`, or `no device found` with port
-  `auto`: something holds the port. Quit the REPL with `Ctrl-]`, and stop any mount or
-  `:MP run` terminal.
+  `auto`: something else holds the port. See [freeing the port](/playbook/stuck-device/#1-check-its-the-device-not-the-port).
 - A message about the package not being found: check the name. micropython-lib packages are
   listed in its [index](https://micropython.org/pi/v2/index.json). For a package on GitHub, use
   `:MP mip github:org/repo`.
@@ -143,9 +143,8 @@ have, or misses ones it does. The project's stubs are for another board or Micro
 version. Run `:MP set_stubs` and pick the first suggestion.
 
 **Stubs installed, but the language server doesn't use them.** It must read `typings/`.
-`pyrightconfig.json` from `:MP init` already says so. If your pyright settings are in
-`pyproject.toml` instead, add `stubPath = "typings"` under `[tool.pyright]`. Language servers
-other than pyright and basedpyright may need their own setting.
+`pyrightconfig.json` from [`:MP init`](/commands/project-and-stubs/#mp-init) already says so. If your pyright settings are in
+`pyproject.toml` instead, add `stubPath = "typings"` under `[tool.pyright]`.
 
 **`uv not found`.** `:MP install` and `:MP set_stubs` need [uv](https://docs.astral.sh/uv/).
 `:MP mip` doesn't: it only needs mpremote.

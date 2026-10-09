@@ -7,7 +7,7 @@ sidebar:
 
 ## Situation
 
-The **device** has stopped answering. Commands hang or fail, the REPL shows no prompt, or your
+The **device** has stopped answering. Commands hang or fail, the **REPL** shows no prompt, or your
 program is running and won't stop. You want it back, without losing anything you don't have to.
 
 Work through the steps in order. Each one is a bigger hammer than the last: the first few only
@@ -17,11 +17,12 @@ stop running code, then you start deleting files from the device, and the last o
 ## What you'll use
 
 - [`:MP repl`](/commands/repl/#mp-repl) and [`:MP interrupt`](/commands/repl/#mp-interrupt) to
-  stop running code
+  **interrupt** running code
 - [`:MP reset`](/commands/device-and-firmware/#mp-reset) for a **soft reset**
 - [`:MP hard_reset`](/commands/device-and-firmware/#mp-hard_reset) for a **hard reset**
-- [`:MP erase`](/commands/files/#mp-erase) to delete the device's `main.py`
+- [`:MP erase`](/commands/files/#mp-erase) to **erase** the device's `main.py`
 - [`:MP erase_all`](/commands/files/#mp-erase_all) to delete every file on the device
+- [`:MP list_devices`](/commands/ports/#mp-list_devices) to check the device still shows up
 - [`:MP flash`](/commands/device-and-firmware/#mp-flash) to reinstall MicroPython
 
 ## Steps
@@ -33,7 +34,8 @@ fails as if the device were dead. Look for these, and close them:
 
 - the [REPL](/commands/repl/) split: go to it and press `Ctrl-]` (closing the window isn't
   enough)
-- a mount or `:MP run` terminal: `Ctrl-C`, or `Ctrl-]` for a mount
+- a [`:MP run`](/commands/running-code/#mp-run) terminal: press `Ctrl-C`
+- a **[mount](/commands/running-code/#mp-mount)**: press `Ctrl-]`
 - another program: Thonny, a serial monitor, or mpremote in another terminal
 
 **You should see** commands working again. If mpremote said
@@ -104,8 +106,8 @@ Pick `main.py` from the list. It's deleted as soon as you pick it, without askin
 
 **You should see** `Delete main.py started`, then `Delete main.py completed successfully`. Do a
 hard reset: the device now starts with nothing to run, and answers. Fix your `main.py` in the
-project, try it with [`:MP run`](/commands/running-code/#mp-run), and only then
-[upload](/commands/running-code/#mp-upload) it again.
+project, try it with `:MP run`, and only then **[upload](/commands/running-code/#mp-upload)**
+it again.
 
 If a `boot.py` is on the device, it runs before `main.py` and can hang the same way. Delete it
 the same way.
@@ -133,15 +135,24 @@ device. If the device still shows up in
 :MP flash stable
 ```
 
+If `:MP flash` can't reach MicroPython on the device, its list is titled
+`No MicroPython detected (mpflash will ask for the board)`: pick a version, then answer
+mpflash's question about which board it is.
+
 **You should see** mpflash download the firmware and flash it in a terminal. Flashing official
 MicroPython normally leaves the device's files alone, so a `main.py` that hangs at start-up can
 still be there afterwards. If it is, delete it as in step 5 now that the device answers.
 
 If the device doesn't show up at all, you can't use the port: flash it from its bootloader
 instead. On a Pico, that's the same as installing MicroPython on [a brand-new
-Pico](/playbook/brand-new-pico/#1-install-micropython). To wipe its files too, drag Raspberry
-Pi's [`flash_nuke.uf2`](https://www.raspberrypi.com/documentation/microcontrollers/pico-series.html#resetting-flash-memory)
-onto the `RPI-RP2` drive first. This erases everything on the Pico's flash, files included.
+Pico](/playbook/brand-new-pico/#1-install-micropython).
+
+To wipe the device's files as well, erase its whole flash before installing MicroPython. On a
+Pico, Raspberry Pi provides a `flash_nuke.uf2` for this: see
+[resetting flash memory](https://www.raspberrypi.com/documentation/microcontrollers/pico-series.html#resetting-flash-memory),
+use the one for your board, and drag it onto the `RPI-RP2` drive (`RP2350` on a Pico 2). On an
+ESP32 or ESP8266, use esptool's erase command. Other boards have their own way: check the
+board's documentation.
 
 ## What can go wrong
 
@@ -150,7 +161,7 @@ command, and the code didn't stop. That happens when a program catches `Keyboard
 turns `Ctrl-C` off with `micropython.kbd_intr(-1)`, or is blocked inside a driver. Try step 2:
 the REPL may still get through. If not, unplug the device, plug it back in and run the command
 straight away, before `main.py` reaches the part that hangs. If it never gives you a gap, go to
-step 7 and wipe the files.
+step 7 and erase the whole flash.
 
 **`no device found` with port `auto`.** Either nothing is connected, or the device's port is in
 use, and `auto` skips busy ports. Do step 1, then check

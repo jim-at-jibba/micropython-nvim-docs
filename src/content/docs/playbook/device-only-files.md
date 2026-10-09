@@ -9,21 +9,25 @@ sidebar:
 
 Some files live only on the **device**: a `config.json` with your Wi-Fi name, a log your
 program writes, or the files a board came with. They aren't in your **project**, so
-[uploading](/commands/running-code/#mp-upload) can't change them. You want to open one,
+**[uploading](/commands/running-code/#mp-upload)** can't change them. You want to open one,
 change it, and save it back, and keep a copy in the project if it's worth keeping.
 
 ## What you'll use
 
 - [`:MP files`](/commands/files/#mp-files) to browse the device and open files from it
-- `mp://` buffers, which read from and write to the device
-- `D` in the browser to download a file into the project
+- [`mp://` buffers](/commands/files/#editing-device-files), which read from and write to the
+  device
+- `D` in [the browser](/commands/files/#mp-files) to download a file into the project
+- [`:MP hard_reset`](/commands/device-and-firmware/#mp-hard_reset) to restart the device with
+  the change
 
 ## Steps
 
 ### 1. Free the port
 
-Every step here talks to the device over its **port**. If the [REPL](/commands/repl/) is open,
-go to it and press `Ctrl-]`. Stop any mount or `:MP run` terminal the same way.
+Every step here talks to the device over its **port**, which only one program can use at a
+time. If the **[REPL](/commands/repl/)** is open, go to it and press `Ctrl-]`. Close anything
+else using the port too: see [freeing the port](/playbook/stuck-device/#1-check-its-the-device-not-the-port).
 
 ### 2. Open the browser
 
@@ -94,16 +98,13 @@ Don't commit it if it holds passwords.
 ## What can go wrong
 
 **`Failed to list device files`, or `Could not list device files. Press R to retry.`**
-Something holds the port. Quit the REPL with `Ctrl-]`, or stop the mount or other program
-using it, then press `R`. If nothing else is using it, the device may be busy running code that
+Something else holds the port: [free it](/playbook/stuck-device/#1-check-its-the-device-not-the-port), then press `R`. If nothing else is using it, the device may be busy running code that
 won't stop: see [The device is stuck](/playbook/stuck-device/).
 
 **`Failed to read config.json from the device`, and the buffer is empty.** The buffer is left
-read-only, so `:w` can't replace the device's file with an empty one. Free the port, close the
+read-only, and if you force a write you get `config.json was not loaded from the device, so it
+was not written`: an empty buffer never replaces the device's file. Free the port, close the
 buffer with `:bd`, and open the file again.
-
-**`config.json was not loaded from the device, so it was not written`.** Same cause: the file
-was never read, so there's nothing safe to write. Close the buffer and open it again.
 
 **`… looks like a binary file and cannot be edited`.** `mp://` buffers are for text. Compiled
 `.mpy` files, images and fonts can only be downloaded (`D`) or deleted (`d`).
