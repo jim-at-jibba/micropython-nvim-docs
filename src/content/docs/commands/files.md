@@ -19,8 +19,8 @@ All of them, including writing an `mp://` buffer, need the port: quit the
 
 :::tip[erase or erase_all?]
 `:MP erase` deletes **one** file or folder that you pick from the top of the device.
-`:MP erase_all` deletes **everything**. Neither asks you to confirm, and **erasing** never touches
-your project. To delete something deeper in the tree, use `d` in `:MP files`, which does ask.
+`:MP erase_all` deletes **everything**. Both ask you to confirm first, and **erasing** never
+touches your project. To delete something deeper in the tree, use `d` in `:MP files`.
 :::
 
 ## `:MP files`
@@ -60,14 +60,16 @@ Prints every file and folder on the device as a tree (`mpremote tree`), in a ter
 
 ## `:MP erase`
 
-Lists the files and folders at the top of the device and **erases** the one you pick. A folder
-is deleted with everything in it. It runs in the background as soon as you pick, without asking
-again.
+Lists the files and folders at the top of the device and **erases** the one you pick, once you
+confirm. It asks `Delete <path>?`, or `Delete <folder>/ and everything in it?` for a folder,
+which is deleted with everything in it. Only Yes deletes: No, or closing the picker, deletes
+nothing and says so. The delete runs in the background.
 
 ## `:MP erase_all`
 
-Erases every file and folder on the device, in a terminal. It starts straight away, without
-asking you to confirm.
+Erases every file and folder on the device, in a terminal. It asks
+`Delete every file on <port>?` first. Only Yes starts it: No, or closing the picker, deletes
+nothing and says so.
 
 The **firmware** isn't affected: MicroPython keeps running, it just has no files. On boards with
 **custom firmware**, parts of the filesystem may be read-only, and `erase_all` can stop with an

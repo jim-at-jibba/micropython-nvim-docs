@@ -88,8 +88,6 @@ may not be the one you want. Pick yours with `:MP set_port`.
   [`setup()` options](/configuration/#setup-options).
 - Neovim was opened in a subfolder of the project. `.micropython` is only read from the folder
   Neovim was opened in.
-- `.micropython` has no `PORT=` line, so `:MP set_port` had nothing to replace. Add
-  `PORT=auto` and pick the port again.
 
 **You edited `.micropython` by hand and nothing changed.** It's only read when Neovim starts.
 Restart Neovim.

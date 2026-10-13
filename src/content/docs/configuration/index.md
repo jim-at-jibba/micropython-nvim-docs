@@ -69,7 +69,8 @@ only key the plugin reads; anything else, such as a `BAUD=` line from v2, is ign
   project already has one, `:MP init` asks before overwriting it, along with the other project
   files.
 - [`:MP set_port`](/commands/ports/#mp-set_port) replaces its `PORT=` line with the port you
-  pick. If the file has no `PORT=` line, nothing is saved, so keep one in it.
+  pick, or adds one if the file doesn't have it. Comments and other lines are left as they
+  are.
 
 Edit it yourself to use a value `:MP set_port` doesn't offer, such as `id:<serial>`.
 
