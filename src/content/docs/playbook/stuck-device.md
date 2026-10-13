@@ -102,7 +102,7 @@ device. If the only copy is on the device, keep one first with `D` in
 :MP erase
 ```
 
-Pick `main.py` from the list. It's deleted as soon as you pick it, without asking again.
+Pick `main.py` from the list, and answer Yes to `Delete main.py?`.
 
 **You should see** `Delete main.py started`, then `Delete main.py completed successfully`. Do a
 hard reset: the device now starts with nothing to run, and answers. Fix your `main.py` in the
@@ -120,7 +120,7 @@ If something else on the device is the problem, or you'd rather start clean, del
 :MP erase_all
 ```
 
-It starts at once, without asking you to confirm. **You should see** a terminal that ends with
+Answer Yes to `Delete every file on <port>?`. **You should see** a terminal that ends with
 `Please Press ENTER to continue`, with no error above it. Your project isn't touched:
 [`:MP upload_all`](/commands/running-code/#mp-upload_all) puts your files back, and packages you
 installed with [`:MP mip`](/commands/device-and-firmware/#mp-mip) need installing again.
